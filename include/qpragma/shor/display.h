@@ -22,12 +22,6 @@ namespace qpragma::shor {
      * representation
      */
     void pretty_display(const boost::math::tools::simple_continued_fraction<fraction> & /* continued_fraction */);
-
-
-    /**
-     * Internal function used by pretty_display
-     */
-    void pretty_display_internal(const std::vector<int64_t> & /* numbers */, uint64_t /* indentation */);
 }
 
 #endif  /* QPRAGMA_SHOR_DISPLAY_H */
