@@ -5,13 +5,10 @@
 #include <iterator>
 #include <algorithm>
 
-using qpragma::shor::fraction;
 
-
-void qpragma::shor::pretty_display(const boost::math::tools::simple_continued_fraction<fraction> & frac) {
-    // Get numbers
-    std::vector<int64_t> numbers = frac.partial_denominators();
-
+// Display a continued fraction
+void qpragma::shor::pretty_display(const std::list<int64_t> & numbers) {
+    // Ensure result not empty
     if (numbers.empty()) {
         return;
     }
@@ -41,4 +38,22 @@ void qpragma::shor::pretty_display(const boost::math::tools::simple_continued_fr
         std::cout << std::endl;
         indent += number_str.size() + 3UL;
     }
+}
+
+
+// Display a list
+std::ostream & operator<<(std::ostream & stream, const std::list<int64_t> & list) {
+    stream << "[";
+    auto iterator = list.begin();
+
+    while (iterator != list.end()) {
+        stream << (*iterator);
+
+        if (++iterator != list.end()) {
+            stream << ", ";
+        }
+    }
+
+    stream << "]";
+    return stream;
 }

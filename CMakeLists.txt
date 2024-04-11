@@ -10,12 +10,14 @@ include_directories(${INCLUDE_DIR})
 
 set(qpragma-shor-cpp
         ${SRC_DIR}/fraction.cpp
+        ${SRC_DIR}/continued_fraction.cpp
         ${SRC_DIR}/display.cpp
         ${SRC_DIR}/main.cpp)
 
 set(qpragma-shor-headers
         ${INCLUDE_DIR}/qpragma/shor.h
         ${INCLUDE_DIR}/qpragma/shor/fraction.h
+        ${INCLUDE_DIR}/qpragma/shor/continued_fraction.h
         ${INCLUDE_DIR}/qpragma/shor/display.h)
 
 # Define compilation rules

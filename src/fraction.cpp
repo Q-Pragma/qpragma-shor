@@ -51,6 +51,11 @@ qpragma::shor::fraction::fraction(int number): _sign((number < 0) ? sign::neg : 
 
 qpragma::shor::fraction::fraction(uint64_t numerator, uint64_t denominator, sign fsign)
     : _sign(fsign), _numerator(numerator), _denominator(denominator) {
+    // Ensure the fraction is finite
+    if (_denominator == 0UL) {
+        throw std::out_of_range("Could not create a a fraction with a denominator equal to 0");
+    }
+
     _simplify();
 }
 
@@ -100,9 +105,29 @@ qpragma::shor::fraction::operator uint64_t() const {
 }
 
 
+qpragma::shor::fraction:: operator int64_t() const {
+    // Get absolute value and check if castable in int64_t
+    uint64_t abs_result = _numerator / _denominator;
+
+    if (abs_result > std::numeric_limits<int64_t>::max()) {
+        throw std::domain_error("Could not cast fraction into a int64_t");
+    }
+
+    // Return result
+    return _sign == sign::pos ?
+        static_cast<int64_t>(abs_result) : -1L * static_cast<int64_t>(abs_result);
+}
+
+
 // Operators
 qpragma::shor::fraction & qpragma::shor::fraction::operator+=(const fraction & other) {
     (*this) = (*this) + other;
+    return (*this);
+}
+
+
+qpragma::shor::fraction & qpragma::shor::fraction::operator-=(const fraction & other) {
+    (*this) = (*this) - other;
     return (*this);
 }
 
@@ -147,19 +172,24 @@ bool qpragma::shor::fraction::operator==(const fraction & other) const {
 }
 
 
+qpragma::shor::fraction qpragma::shor::fraction::operator-() const {
+    return fraction(_numerator, _denominator, invert_sign(_sign));
+}
+
+
 /**
  * Useful functions
  */
 
 // Is finite
 bool std::isfinite(const qpragma::shor::fraction & frac) {
-    return frac.denominator() != 0UL;
+    return frac.denominator() != 0UL;  // Should be always true
 }
 
 
 // Floor
 qpragma::shor::fraction std::floor(const qpragma::shor::fraction & frac) {
-    return qpragma::shor::fraction(static_cast<uint64_t>(frac));
+    return qpragma::shor::fraction(static_cast<uint64_t>(frac), frac.get_sign());
 }
 
 // Absolute value
@@ -193,8 +223,10 @@ qpragma::shor::fraction operator+(const qpragma::shor::fraction & first, const q
 // Substract
 qpragma::shor::fraction operator-(const qpragma::shor::fraction & first, const qpragma::shor::fraction & second) {
     // Implementation of "-" operators works only if fractions have the same sign
+    // If fractions have different signs, the result is "±(abs(first) + abs(second))"
     if (first.get_sign() != second.get_sign()) {
-        throw std::runtime_error("Could not substract two fractions having different signs");
+        return first.get_sign() == qpragma::shor::sign::pos ?
+            (first + std::abs(second)) : -(std::abs(first) + second);
     }
 
     // Get sign

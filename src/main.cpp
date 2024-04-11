@@ -1,8 +1,8 @@
 #include <iostream>
 #include "qpragma/shor.h"
 
-using boost::math::tools::simple_continued_fraction;
 using qpragma::shor::fraction;
+using qpragma::shor::continued_fraction;
 using qpragma::shor::pretty_display;
 
 
@@ -11,7 +11,7 @@ int main() {
     {
         std::cout << "================ EXAMPLE ===============" << std::endl;
         fraction frac(15625UL, 6842UL);
-        auto continued_frac = simple_continued_fraction(frac);
+        auto continued_frac = continued_fraction(frac);
 
         std::cout << frac << " = " << continued_frac << std::endl << std::endl;
         pretty_display(continued_frac);
@@ -32,7 +32,7 @@ int main() {
 
         // Compute
         fraction frac(num, denom);
-        auto continued_frac = simple_continued_fraction(frac);
+        auto continued_frac = continued_fraction(frac);
 
         std::cout << frac << " = " << continued_frac << std::endl << std::endl;
         pretty_display(continued_frac);

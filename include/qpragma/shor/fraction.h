@@ -56,15 +56,19 @@ namespace qpragma::shor {
         // Cast function
         fraction & operator=(uint64_t);
         operator uint64_t() const;
+        operator int64_t() const;
 
         // Operators
         fraction & operator+=(const fraction &);
+        fraction & operator-=(const fraction &);
         fraction & operator*=(const fraction &);
         std::strong_ordering operator<=>(const fraction &) const;
         
         bool operator==(int) const;
         bool operator==(uint64_t) const;
         bool operator==(const fraction &) const;
+
+        fraction operator-() const;
     };
 }
 
@@ -94,32 +98,6 @@ namespace std {
      * This function copy the argument but change the sign of the fraction
      */
     qpragma::shor::fraction abs(const qpragma::shor::fraction &);
-
-
-    /**
-     * Numerical limits of a fraction
-     * This class does not implement all the specifications of "numeric_limits"
-     */
-    template <>
-    struct numeric_limits<qpragma::shor::fraction> {
-        // Number of digits of digits in the base-10 required to display a fraction number
-        // The same number of digits as "double" is used
-        static constexpr uint64_t max_digits10 = std::numeric_limits<double>::max_digits10;
-
-        // Compute the minimal value.
-        // This value is technically (- MAX_UINT64) but (- MAX_UINT32) will be preferred
-        // to avoid overflow when manipulating fractions
-        static qpragma::shor::fraction min() {
-            return qpragma::shor::fraction(std::numeric_limits<uint32_t>::max(), qpragma::shor::sign::neg);
-        }
-
-        // Difference between 1.0 and the next value representable using a fraction.
-        // This value is technically (1 / MAX_UINT64) but (1 / MAX_UINT32) will be preferred
-        // to avoid overflow when manipulating fractions
-        static qpragma::shor::fraction epsilon() {
-            return qpragma::shor::fraction(1UL, std::numeric_limits<uint32_t>::max());
-        }
-    };
 }
 
 

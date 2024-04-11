@@ -13,15 +13,24 @@
 #ifndef QPRAGMA_SHOR_DISPLAY_H
 #define QPRAGMA_SHOR_DISPLAY_H
 
-#include "qpragma/shor/fraction.h"
-#include <boost/math/tools/simple_continued_fraction.hpp>
+#include <list>
+#include <ostream>
+#include <cstdint>
+
 
 namespace qpragma::shor {
     /**
      * Display in a pretty way a continued fraction
      * representation
      */
-    void pretty_display(const boost::math::tools::simple_continued_fraction<fraction> & /* continued_fraction */);
+    void pretty_display(const std::list<int64_t> & /* continued_fraction */);
 }
+
+
+/**
+ * Display a continued fraction representation
+ * This operator displays a list
+ */
+std::ostream & operator<<(std::ostream &, const std::list<int64_t> &);
 
 #endif  /* QPRAGMA_SHOR_DISPLAY_H */

@@ -14,6 +14,7 @@
 #define QPRAGMA_SHOR_H
 
 #include "qpragma/shor/fraction.h"
+#include "qpragma/shor/continued_fraction.h"
 #include "qpragma/shor/display.h"
 
 #endif  /* QPRAGMA_SHOR_H */
