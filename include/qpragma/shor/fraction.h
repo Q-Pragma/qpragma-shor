@@ -45,7 +45,8 @@ namespace qpragma::shor {
     public:
         fraction() = default;
         explicit fraction(uint64_t /* number */, sign /* fsign */ = sign::pos);                         // Computes "± number / 1"
-        fraction(int /* number */);                                                                     // Computes "number / 1"
+        explicit fraction(int /* number */);                                                            // Computes "number / 1"
+        explicit fraction(int64_t /* number */);                                                        // Computes "number / 1"
         fraction(uint64_t /* numerator */, uint64_t /* denominator */, sign /* fsign */ = sign::pos);   // Computes "± numerator / denominator"
 
         // Get numerator and denomirator

@@ -49,6 +49,9 @@ qpragma::shor::fraction::fraction(uint64_t numerator, sign fsign): _sign(fsign),
 qpragma::shor::fraction::fraction(int number): _sign((number < 0) ? sign::neg : sign::pos), _numerator(std::abs(number)) {}
 
 
+qpragma::shor::fraction::fraction(int64_t number): _sign((number < 0) ? sign::neg : sign::pos), _numerator(std::abs(number)) {}
+
+
 qpragma::shor::fraction::fraction(uint64_t numerator, uint64_t denominator, sign fsign)
     : _sign(fsign), _numerator(numerator), _denominator(denominator) {
     // Ensure the fraction is finite
