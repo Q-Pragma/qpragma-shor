@@ -23,6 +23,27 @@ namespace qpragma::shor {
      * decomposition
      */
     std::list<int64_t> continued_fraction(fraction);
+
+
+    /**
+     * Find candidate
+     * Given a fraction p/q, find a candidate
+     * r such as the following requirements are satisfied:
+     *  - c/r is a convergent of p/q (c and r are coprime)
+     *  - abs(p/q - c/r) <= 1/2q
+     *  - r is even
+     *  - x^r % N == 1
+     *
+     * If no such r is find, 0 is returned
+     */
+    uint64_t find_candidate(const fraction & /* fraction */, uint64_t /* x_value */, uint64_t /* N_value */);
+
+
+    /**
+     * Computes pow(x, y)
+     * The C++ implementation manages double, which may return inacurrate results
+     */
+    uint64_t pow(uint64_t /* base */, uint64_t /* exponent */);
 }
 
 #endif  /* QPRAGMA_SHOR_CONTINUED_FRACTION_H */

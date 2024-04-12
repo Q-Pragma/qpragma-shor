@@ -22,7 +22,7 @@ void qpragma::shor::pretty_display(const std::list<int64_t> & numbers) {
 
     for (auto item: numbers) {
         std::string number_str = std::to_string(item);
-        bool is_not_last_line = display_size > indent + 3UL;
+        bool is_not_last_line = display_size > indent + 3UL + number_str.size();
         uint64_t nb_dash = 0UL;
 
         if (is_not_last_line) {
