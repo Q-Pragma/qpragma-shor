@@ -12,7 +12,7 @@
 #include "qpragma/shor/continued_fraction.h"
 #include "qpragma/shor/display.h"
 
-using qpragma::shor::pow;
+using qpragma::shor::pow_mod;
 using qpragma::shor::fraction;
 using qpragma::shor::continued_fraction;
 
@@ -93,10 +93,10 @@ TEST(Pow, Trivial) {
 
     for (uint8_t idx = 0; idx < 100; ++idx) {
         uint64_t base = distrib(gen);
-        uint64_t pow_base_one = pow(base, 1UL);
-        uint64_t pow_base_zero = pow(base, 0UL);
+        uint64_t pow_base_one = pow_mod(base, 1UL, 50UL);
+        uint64_t pow_base_zero = pow_mod(base, 0UL, 50UL);
 
-        ASSERT_EQ(pow_base_one, base) << "pow(" << base << ", 1) is not equal to " << base;
+        ASSERT_EQ(pow_base_one, base % 50UL) << "pow(" << base << ", 1) is not equal to " << base;
         ASSERT_EQ(pow_base_zero, 1UL) << "pow(" << base << ", 0) is not equal to 1";
     }
 }
@@ -104,8 +104,11 @@ TEST(Pow, Trivial) {
 
 TEST(Pow, PowerOfTwo) {
     for (uint64_t exponent = 3UL; exponent < 50UL; ++exponent) {
-        auto result = pow(2UL, exponent);
-        ASSERT_EQ(result, 1UL << exponent) << "pow(2, " << exponent << ") is not equal to " << (1UL << exponent);
+        auto result_no_mod = pow_mod(2UL, exponent, 1UL << 60UL);
+        ASSERT_EQ(result_no_mod, 1UL << exponent) << "pow(2, " << exponent << ") is not equal to " << (1UL << exponent);
+
+        auto result_mod = pow_mod(2UL, exponent, 43UL);
+        ASSERT_EQ(result_mod, (1UL << exponent) % 43UL) << "pow(2, " << exponent << ") % 43 is not equal to " << ((1UL << exponent) % 43UL);
     }
 }
 
@@ -113,19 +116,34 @@ TEST(Pow, PowerOfTwo) {
 TEST(Pow, Fixed) {
     // Pow(5, 7)
     {
-        auto result = pow(5UL, 7UL);
+        auto result = pow_mod(5UL, 7UL, std::numeric_limits<uint64_t>::max());
         ASSERT_EQ(result, 78125UL);
+    }
+
+    {
+        auto result = pow_mod(5UL, 7UL, 100UL);
+        ASSERT_EQ(result, 25UL);
     }
 
     // Pow(12, 2)
     {
-        auto result = pow(12UL, 2UL);
+        auto result = pow_mod(12UL, 2UL, std::numeric_limits<uint64_t>::max());
         ASSERT_EQ(result, 144UL);
+    }
+
+    {
+        auto result = pow_mod(12UL, 2UL, 40UL);
+        ASSERT_EQ(result, 24UL);
     }
 
     // Pow(3UL, 13UL)
     {
-        auto result = pow(3UL, 13UL);
+        auto result = pow_mod(3UL, 13UL, std::numeric_limits<uint64_t>::max());
         ASSERT_EQ(result, 1594323UL);
+    }
+
+    {
+        auto result = pow_mod(3UL, 13UL, 143UL);
+        ASSERT_EQ(result, 16UL);
     }
 }

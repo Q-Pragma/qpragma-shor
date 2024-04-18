@@ -26,13 +26,17 @@ set(qpragma-shor-headers
         ${INCLUDE_DIR}/qpragma/shor.h
         ${INCLUDE_DIR}/qpragma/shor/fraction.h
         ${INCLUDE_DIR}/qpragma/shor/continued_fraction.h
+        ${INCLUDE_DIR}/qpragma/shor/core.h
+        ${INCLUDE_DIR}/qpragma/shor/core.ipp
         ${INCLUDE_DIR}/qpragma/shor/display.h)
 
 # Define compilation rules
 add_executable(qpragma-shor ${qpragma-shor-cpp} ${SRC_DIR}/main.cpp)
+target_link_libraries(qpragma-shor qpragma qpragma-pybindlinalg qatnewlinalg)
 set_target_properties(
     qpragma-shor PROPERTIES PUBLIC_HEADER "${qpragma-shor-headers}"
-                            LINKER_LANGUAGE CXX)
+                            LINKER_LANGUAGE CXX
+                            COMPILE_FLAGS -fplugin=qpragma-plugin.so)
 
 # Install
 install(TARGETS qpragma-shor

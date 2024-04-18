@@ -16,6 +16,7 @@
 #include <list>
 #include <ostream>
 #include <cstdint>
+#include <boost/timer/progress_display.hpp>
 
 
 namespace qpragma::shor {
@@ -24,6 +25,22 @@ namespace qpragma::shor {
      * representation
      */
     void pretty_display(const std::list<int64_t> & /* continued_fraction */);
+
+
+    /**
+     * Progress bar
+     * This progress bar inherit from boost::timer::progress_bar
+     */
+    class progress_display: public boost::timer::progress_display {
+    public:
+        // Cnstructor (non-copyable)
+        progress_display(uint64_t /* progress_size */);
+        progress_display(const progress_display &) = delete;
+        progress_display & operator=(const progress_display &) = delete;
+
+        // Destructor
+        ~progress_display();
+    };
 }
 
 

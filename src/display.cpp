@@ -41,6 +41,31 @@ void qpragma::shor::pretty_display(const std::list<int64_t> & numbers) {
 }
 
 
+/**
+ * Progress display
+ * This progress display inherit from a class defined in boost library
+ */
+
+// Constructor
+qpragma::shor::progress_display::progress_display(uint64_t progress_size) : boost::timer::progress_display(progress_size) {}
+
+
+// Destructor
+qpragma::shor::progress_display::~progress_display() {
+    if (count() == expected_count()) {
+        std::cout << std::endl;
+    }
+
+    else {
+        std::cout << "\n\n" << std::flush;
+    }
+}
+
+
+/**
+ * Additional operators
+ */
+
 // Display a list
 std::ostream & operator<<(std::ostream & stream, const std::list<int64_t> & list) {
     stream << "[";

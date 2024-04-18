@@ -40,10 +40,11 @@ namespace qpragma::shor {
 
 
     /**
-     * Computes pow(x, y)
-     * The C++ implementation manages double, which may return inacurrate results
+     * Computes pow(x, y) % z
+     * The C++ implementation manages double, which may return inacurrate results.
+     * Moreover, the modulus avoid overflow
      */
-    uint64_t pow(uint64_t /* base */, uint64_t /* exponent */);
+    uint64_t pow_mod(uint64_t /* base */, uint64_t /* exponent */, uint64_t /* modulus */);
 }
 
 #endif  /* QPRAGMA_SHOR_CONTINUED_FRACTION_H */

@@ -63,7 +63,7 @@ uint64_t qpragma::shor::find_candidate(
         if (
             std::abs(frac - convergent) < threshold
             and convergent.denominator() % 2UL == 0UL
-            and pow(x_value, convergent.denominator()) % N_value == 1
+            and pow_mod(x_value, convergent.denominator(), N_value) == 1UL
         ) {
             return convergent.denominator();
         }
@@ -75,19 +75,19 @@ uint64_t qpragma::shor::find_candidate(
 
 
 // Pow
-uint64_t qpragma::shor::pow(uint64_t base, uint64_t exponent) {
+uint64_t qpragma::shor::pow_mod(uint64_t base, uint64_t exponent, uint64_t modulus) {
     // Trivial cases
     if (exponent == 0UL)
         return 1;
 
     if (exponent == 1UL)
-        return base;
+        return base % modulus;
 
     // Recurse call
-    uint64_t square_root = pow(base, exponent / 2UL);
+    uint64_t square_root = pow_mod(base, exponent / 2UL, modulus);
 
     if (exponent % 2UL == 0UL)
-        return square_root * square_root;
+        return (square_root * square_root) % modulus;
 
-    return base * square_root * square_root;
+    return (base * square_root * square_root) % modulus;
 }
