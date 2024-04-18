@@ -5,7 +5,7 @@
  */
 
 template <uint64_t SIZE>
-uint64_t qpragma::shor::find_divisor(uint64_t to_divide) {
+uint64_t qpragma::shor::find_divisor(uint64_t to_divide, bool quantum_only) {
     // Shor is probabilistic - define maximum attempt
     constexpr uint64_t max_attempt = 20UL;
     qpragma::shor::progress_display progress_bar(max_attempt);
@@ -21,8 +21,10 @@ uint64_t qpragma::shor::find_divisor(uint64_t to_divide) {
         // Step 1: find a random number
         uint64_t random_number = distrib(rd);
 
-        // If random_number is not coprime with to_divide, random number is a solution
+        // If random_number is not coprime with to_divide, gcd is a solution
         if(auto gcd = std::gcd(random_number, to_divide); gcd != 1UL) {
+            if (quantum_only) continue;
+
             return gcd;
         }
 

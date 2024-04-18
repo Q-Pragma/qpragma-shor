@@ -31,7 +31,7 @@ namespace qpragma::shor {
      * a solution to this problem.
      */
     template <uint64_t SIZE>
-    uint64_t find_divisor(uint64_t /* to_divide */);
+    uint64_t find_divisor(uint64_t /* to_divide */, bool /* quantum_only */ = false);
 }
 
 #include "qpragma/shor/core.ipp"
