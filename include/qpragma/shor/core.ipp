@@ -62,17 +62,20 @@ uint64_t qpragma::shor::find_divisor(uint64_t to_divide, bool quantum_only) {
 
         // Step 3: classical part
         qpragma::shor::fraction frac(measurement, 1UL << (2UL * SIZE));
-        auto candidate = qpragma::shor::find_candidate(frac, random_number, to_divide);
+        auto candidate = qpragma::shor::find_candidate(frac, random_number, to_divide);  // If no candidate, 0UL is returned
 
         if (candidate != 0UL) {
             auto pow_value = pow_mod(random_number, candidate / 2UL, to_divide);
 
-            if (auto value = std::gcd((pow_value + 1UL) % to_divide, to_divide); value != 1 and value != to_divide) {
-                progress_bar += max_attempt - attempt_idx - 1UL;
-                return value;
-            }
-
-            if (auto value = std::gcd((pow_value - 1UL) % to_divide, to_divide); value != 1 and value != to_divide) {
+            // The following equality is true "(pow_value + 1) * (pow_value - 1) % to_divide == 0", but:
+            //
+            //   - If a non-trival divisor can be computed from "pow_value + 1", a non-trivial divisor can be also computed
+            //     from "pow_value - 1".
+            //   - If only a trivial divisor can be computed from "pow_value + 1", only a trivial divisor can be computed
+            //     from "pow_value - 1".
+            //
+            // Then, only "pow_value + 1" will be considered to find a divisor.
+            if (auto value = std::gcd(pow_value + 1UL, to_divide); value != 1 and value != to_divide) {
                 progress_bar += max_attempt - attempt_idx - 1UL;
                 return value;
             }

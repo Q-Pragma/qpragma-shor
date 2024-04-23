@@ -76,12 +76,9 @@ uint64_t qpragma::shor::find_candidate(
 
 // Pow
 uint64_t qpragma::shor::pow_mod(uint64_t base, uint64_t exponent, uint64_t modulus) {
-    // Trivial cases
+    // Trivial case
     if (exponent == 0UL)
         return 1;
-
-    if (exponent == 1UL)
-        return base % modulus;
 
     // Recurse call
     uint64_t square_root = pow_mod(base, exponent / 2UL, modulus);
