@@ -48,7 +48,7 @@ uint64_t qpragma::shor::find_divisor(uint64_t to_divide, bool quantum_only) {
                 #pragma quantum ctrl(control)
                 qpragma::arith::mult_const_mod_in_place<SIZE>(base, to_divide)(reg);
 
-                qpragma::PH(M_PI * static_cast<double>(measurement) / static_cast<double>(1UL << (idx + 1UL)))(control);
+                qpragma::RZ(M_PI * static_cast<double>(measurement) / static_cast<double>(1UL << (idx + 1UL)))(control);
                 qpragma::H(control);
 
                 // Update measurement
