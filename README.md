@@ -13,6 +13,7 @@ cmake -Wno-dev -Bbuild -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_DIR} -DCMAKE_EXPORT
 Then, the project can be compiled using `make`
 
 ```bash
+cd build
 make -j5        # Compilation using 5 processes - can be changed
 make install    # Installation
 ```
