@@ -18,7 +18,7 @@ make install    # Installation
 ```
 
 ## Execution
-Now, the Shor algorithm can be executed using the command `qpragma-shor` (if your `${INSTALL_DIR}` is in your `${PATH}`).
+Now, the Shor algorithm can be executed using the `qpragma-shor` command (if your `${INSTALL_DIR}` is in your `${PATH}`).
 The Shor algorithm can find a solution classically, solution found classically can be ignored by using the `--quantum-only` option. The
 `qpragma-shor` command usage is:
 
