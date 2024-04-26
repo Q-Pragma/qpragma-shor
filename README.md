@@ -33,4 +33,5 @@ Shor algorithm implemented using Q-Pragma:
 > This usage can be computed using `qpragma-shor --help` command.
 
 **Example of Shor:**
+
 ![Screenshot of Shor algorithm execution](./images/execution-shor.png)
