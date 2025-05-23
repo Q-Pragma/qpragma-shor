@@ -74,17 +74,18 @@ uint64_t qpragma::shor::find_candidate(
 }
 
 
-// Pow
+// Modular exponentiation: computes b^e % m
 uint64_t qpragma::shor::pow_mod(uint64_t base, uint64_t exponent, uint64_t modulus) {
-    // Trivial case
-    if (exponent == 0UL)
-        return 1;
+    uint64_t result = 1;
+    uint64_t power = base % modulus;
 
-    // Recurse call
-    uint64_t square_root = pow_mod(base, exponent / 2UL, modulus);
+    while (exponent > 0) {
+        if (exponent % 2 == 1) {
+            result = (result * power) % modulus;
+        }
+        power = (power * power) % modulus;
+        exponent /= 2;
+    }
 
-    if (exponent % 2UL == 0UL)
-        return (square_root * square_root) % modulus;
-
-    return (base * square_root * square_root) % modulus;
+    return result;
 }

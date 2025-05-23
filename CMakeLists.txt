@@ -32,7 +32,7 @@ set(qpragma-shor-headers
 
 # Define compilation rules
 add_executable(qpragma-shor ${qpragma-shor-cpp} ${SRC_DIR}/main.cpp)
-target_link_libraries(qpragma-shor qpragma qpragma-pybindlinalg qatnewlinalg boost_program_options)
+target_link_libraries(qpragma-shor qpragma qpragma-newlinalg qatnewlinalg boost_program_options)
 set_target_properties(
     qpragma-shor PROPERTIES PUBLIC_HEADER "${qpragma-shor-headers}"
                             LINKER_LANGUAGE CXX
